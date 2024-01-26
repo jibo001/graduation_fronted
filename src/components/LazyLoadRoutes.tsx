@@ -23,5 +23,5 @@ export default function LazyLoadRoutes(callback: () => Promise<defRC>) {
 
 const Error = () => {
   const { t } = useTranslation()
-  return <div className="flex items-center justify-center w-screen h-full">{t('Something went wrong')}</div>
+  return <div className="flex items-center justify-center w-screen h-screen">{t('Something went wrong')}</div>
 }

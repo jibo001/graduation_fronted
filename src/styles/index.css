@@ -6,7 +6,7 @@
 @import "./variables.css";
 
 body {
-  font-variant-east-asian: traditional;
+  /* font-variant-east-asian: traditional; */
   -moz-user-select: none; /*火狐*/
   -webkit-user-select: none; /*webkit浏览器*/
   -ms-user-select: none; /*IE10*/
@@ -21,9 +21,26 @@ body {
 }
 
 #root {
-  background: #1c1c1c;
-  background-size: 100% 100%;
+  margin: 0 auto;
+  max-width: 700px;
+  min-height: 100vh;
+  background: #f6f6f6;
   background-repeat:no-repeat;
-  padding-bottom: 50px;
+  padding-bottom: 70px;
 }
 
+:root:root {
+  --adm-color-background:transparent;
+  --adm-color-primary:#000000;
+}
+
+.adm-list-item-content{
+  border:none !important;
+}
+.adm-input-element, .adm-text-area-element{
+  font-size: 14px !important;
+}
+.adm-form {
+  --border-bottom:'none';
+  --border-top:'none';
+}

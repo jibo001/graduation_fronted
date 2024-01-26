@@ -5,8 +5,8 @@ import { erc20ABI, erc721ABI } from 'wagmi';
 
 // ABI
 // import idoStakeABI from '@/config/abi/idoStakeAbi.json'
-import idoStake from '@/config/abi/idoStake';
-import { getIdoStakeAddress } from './addressHelpers';
+import charity from '@/config/abi/charity';
+import { getCharityAddress } from './addressHelpers';
 
 
 export const getContract = <TAbi extends Abi | unknown[], TWalletClient extends WalletClient>({
@@ -42,5 +42,5 @@ export const getErc721Contract = (address: Address, walletClient?: WalletClient)
   signer: walletClient,
 });
 
-export const getIdoStakeContract = (signer?: WalletClient) => getContract({ abi: idoStake, address: getIdoStakeAddress(), signer });
+export const getCharityContract = (signer?: WalletClient) => getContract({ abi: charity, address: getCharityAddress(), signer });
 

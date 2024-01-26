@@ -7,4 +7,4 @@ export interface Addresses {
 
 export const getAddressFromMap = (address: Addresses, chainId: number = env.chainId): `0x${string}` => address[chainId];
 
-export const getIdoStakeAddress = (chainId: number = env.chainId) => getAddressFromMap(addresses.idoStake, chainId);
+export const getCharityAddress = (chainId: number = env.chainId) => getAddressFromMap(addresses.charity, chainId);
