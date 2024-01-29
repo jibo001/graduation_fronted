@@ -15,24 +15,28 @@ export default function useRegister() {
 
   const charityContract = getCharityContract()
 
-  const { data, refetch } = useContractRead({
+  const { data, refetch, isLoading } = useContractRead({
     ...charityContract,
-    functionName: 'persons',
+    functionName: 'getPersonDetail',
     args: [address],
-    enabled: isConnected
+    enabled: isConnected,
   })
-  const isRegister = !!data[0]
+
+  const person = data
+
+  const isRegister = !isLoading && !!data.idCard
 
   const register = async (registerData: RegisterParams) => {
     await fetchWithCatchTxError(() =>
-      callWithGasPrice(charityContract, 'register', [hashMessage(registerData.idCard), registerData.name, registerData.age, registerData.sex]),
+      callWithGasPrice(charityContract, 'register', [hashMessage(registerData.idCard), registerData.name, registerData.birthYear, registerData.sex]),
     )
-    Toast.show('注册成功')
     refetch()
+    Toast.show('注册成功')
     navigate('/')
   }
 
   return {
+    person,
     register,
     isRegister,
     loading

@@ -1,18 +1,79 @@
 import React, { PropsWithChildren } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { Donate } from '@/types/donate'
-import { mockList } from '@/utils/mock'
+import { usePublicClient } from 'wagmi'
+import { Button, Input } from 'antd-mobile'
+import { Donate, DonateWithPerson, Person } from '@/types/donate'
+import useDonateDetail from './hooks/useDonateDetail'
+import { formatAddress } from '@/utils'
+import useUsdt from '@/hooks/useUsdt'
+import useHandleDonate from './hooks/useHandleDonate'
+import useHelperList from './hooks/useHelperList'
+
+type DonatorRecordsWithDetail = ReturnType<typeof useHelperList>
 
 const DonateDetail = () => {
   const [params] = useSearchParams()
   const id = params.get('id')
-  const detail = mockList.find((item) => item.id === id)
+  const { usdtIsApprove, handleUsdtApprove, usdtApproveLoading } = useUsdt()
+  const { donate, loading, amount, setAmount } = useHandleDonate()
+  const { detail, isLoading } = useDonateDetail(id)
+  const { donatorRecordsWithDetail, loading: donatorsLoading } = useHelperList(id, detail.donate.donatorsAddress)
+
+  const onDonate = () => {
+    if (usdtIsApprove) {
+      donate(BigInt(id))
+    } else {
+      handleUsdtApprove()
+    }
+  }
+
+  return (
+    <>
+      <DonateDetailHeader detail={detail} isLoading={isLoading}>
+        <Input
+          value={String(amount)}
+          onChange={(value) => setAmount(Number(value))}
+          type="number"
+          placeholder="请输入捐款数额"
+          className="p-1 px-2 mt-5 text-xs border border-black border-solid rounded-full"
+          style={{
+            '--text-align': 'center',
+          }}
+        />
+        <Button
+          className="mt-2 text-white bg-black rounded-xl"
+          block
+          loading={usdtApproveLoading || loading}
+          onClick={() => onDonate()}
+        >
+          <span className="text-sm">{usdtIsApprove ? '捐款' : '授权'}</span>
+        </Button>
+      </DonateDetailHeader>
+      <DonatorList donatorRecordsWithDetail={donatorRecordsWithDetail} loading={donatorsLoading} />
+    </>
+  )
+}
+
+export const DonateDetailHeader: React.FC<PropsWithChildren<{ detail: DonateWithPerson; isLoading: boolean }>> = ({
+  detail,
+  isLoading,
+  children,
+}) => {
   return (
     <div className="px-3 py-3 bg-white rounded-xl">
-      <Title title={detail.title} name={detail.name} />
-      <AmountGroup currentAmount={detail.currentAmount} targetAmount={detail.targetAmount} />
-      <Content detail={detail.detail} images={detail.images} />
-      <ProofMaterial detail={detail} />
+      {isLoading ? (
+        <div className="flex items-center justify-center h-[200px]">
+          <div className="w-10 h-10 border-t-2 border-b-2 border-gray-900 rounded-full animate-spin" />
+        </div>
+      ) : (
+        <>
+          <Title title={detail.donate.title} name={detail.person.name} />
+          <AmountGroup currentAmount={detail.donate.currentAmount} targetAmount={detail.donate.targetAmount} />
+          {children}
+          <Content detail={detail.donate.detail} images={detail.donate.images} />
+          <ProofMaterial detail={detail} />
+        </>
+      )}
     </div>
   )
 }
@@ -21,18 +82,18 @@ const AmountGroup: React.FC<Pick<Donate, 'currentAmount' | 'targetAmount'>> = ({
   return (
     <div className="flex items-center justify-between mt-8">
       <div className="flex-1 text-center">
-        <div className="text-2xl text-orange-400">{targetAmount}</div>
+        <div className="text-2xl text-orange-400">{targetAmount.toString()}</div>
         <div className="text-xs mt-1.5 text-[#898989]">急需筹款($)</div>
       </div>
       <div className="flex-1 text-center">
-        <div className="text-2xl text-orange-400">{currentAmount}</div>
+        <div className="text-2xl text-orange-400">{currentAmount.toString()}</div>
         <div className="text-xs mt-1.5 text-[#898989]">已经筹到($)</div>
       </div>
     </div>
   )
 }
 
-const Title: React.FC<Pick<Donate, 'title' | 'name'>> = ({ title, name }) => {
+const Title: React.FC<Pick<Donate, 'title'> & Pick<Person, 'name'>> = ({ title, name }) => {
   return (
     <>
       <div className="text-2xl">{title}</div>
@@ -57,15 +118,25 @@ const Content: React.FC<Pick<Donate, 'detail' | 'images'>> = ({ detail, images }
   )
 }
 
-const ProofMaterial: React.FC<{ detail: Donate }> = ({ detail }) => {
+const ProofMaterial: React.FC<{ detail: DonateWithPerson }> = ({ detail }) => {
+  const client = usePublicClient()
+
   return (
     <div className="mt-8">
       <div className="text-lg">证明材料</div>
       <div className="mt-5 bg-[#f1f1f171] px-4 py-6 rounded-xl">
         <div>基本信息</div>
-        <InfoWrapper title="患者姓名">{detail.name}</InfoWrapper>
-        <InfoWrapper title="所患疾病">{detail.sickName}</InfoWrapper>
-        <InfoWrapper title="收款地址">{detail.sickName}</InfoWrapper>
+        <InfoWrapper title="患者姓名">{detail.person.name}</InfoWrapper>
+        <InfoWrapper title="所患疾病">{detail.donate.sickName}</InfoWrapper>
+        <InfoWrapper title="收款地址">
+          <a
+            target="_blank"
+            href={`${client.chain.blockExplorers.default.url}/address/${detail.donate.personAddress}`}
+            rel="noreferrer"
+          >
+            <span className="text-blue-500">{formatAddress(detail.donate.personAddress)}</span>
+          </a>
+        </InfoWrapper>
       </div>
     </div>
   )
@@ -78,6 +149,28 @@ const InfoWrapper: React.FC<PropsWithChildren<{ title: string }>> = ({ title, ch
         <span className="p-1 text-sm text-white bg-black rounded-sm">{title}</span>
       </div>
       <div className="pt-0">{children}</div>
+    </div>
+  )
+}
+
+const DonatorList: React.FC<DonatorRecordsWithDetail> = ({ donatorRecordsWithDetail, loading }) => {
+  return (
+    <div className="p-3 mt-4 bg-white rounded-xl">
+      <div className="text-lg">捐赠记录</div>
+      {!loading && (
+        <div className="mt-2 bg-[#f1f1f171] px-4 py-6 pt-1 rounded-xl">
+          {donatorRecordsWithDetail.map((donator, index) => {
+            return (
+              <div className="flex items-center justify-between mt-5" key={index}>
+                <div className="w-20">
+                  <span className="p-1 text-sm text-white bg-black rounded-lg">{donator.name}</span>
+                </div>
+                <div className="pt-0">${donator.amount.toString()}</div>
+              </div>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }

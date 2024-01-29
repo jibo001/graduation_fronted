@@ -11,15 +11,15 @@ const Header = () => {
         <img src="/images/logo.svg" className="w-10" alt="" />
         <div>HopeChain</div>
       </div>
-      <Link to="/submitDonate">
-        {!isConnected ? (
-          <CustomConnectButton />
-        ) : (
+      {!isConnected ? (
+        <CustomConnectButton />
+      ) : (
+        <Link to="/createDonate">
           <Button size="mini" className="text-white bg-black rounded-lg">
             我需要帮助
           </Button>
-        )}
-      </Link>
+        </Link>
+      )}
     </div>
   )
 }

@@ -71,3 +71,13 @@ export const copy = (value: string) => {
   // 执行浏览器复制命令
   document.body.removeChild(text)
 }
+
+export const getSex = (type: number) => {
+  if (type === 0) return '女'
+  if (type === 1) return '男'
+  return '未知'
+}
+
+export const getAge = (birthYear: number) => {
+  return new Date().getFullYear() - birthYear
+}

@@ -25,11 +25,43 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: '/submitDonate',
-        element: lazyLoadRoutes(() => import('@/views/SubmitDonate/SubmitDonate')),
+        path: '/myDonate',
+        element: lazyLoadRoutes(() => import('@/views/Donate/MyDonate')),
         // router meta
         handle: {
-          name: 'submitDonate',
+          name: 'myDonate',
+        },
+      },
+      {
+        path: '/joinDonate',
+        element: lazyLoadRoutes(() => import('@/views/Donate/JoinDonate')),
+        // router meta
+        handle: {
+          name: 'joinDonate',
+        },
+      },
+      {
+        path: '/createDonate',
+        element: lazyLoadRoutes(() => import('@/views/CreateDonate/CreateDonate')),
+        // router meta
+        handle: {
+          name: 'createDonate',
+        },
+      },
+      {
+        path: '/myAudit',
+        element: lazyLoadRoutes(() => import('@/views/Audit/MyAudit')),
+        // router meta
+        handle: {
+          name: 'myAudit',
+        },
+      },
+      {
+        path: '/auditDetail',
+        element: lazyLoadRoutes(() => import('@/views/Audit/AuditDetail')),
+        // router meta
+        handle: {
+          name: 'auditDetail',
         },
       },
       {
@@ -46,6 +78,14 @@ const router = createBrowserRouter([
         // router meta
         handle: {
           name: 'voteDetail',
+        },
+      },
+      {
+        path: '/myVote',
+        element: lazyLoadRoutes(() => import('@/views/Vote/MyVote')),
+        // router meta
+        handle: {
+          name: 'myVote',
         },
       },
       {

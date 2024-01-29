@@ -1,5 +1,6 @@
 import { Button, Form, Input, Popup, Radio, Space } from 'antd-mobile'
 import React from 'react'
+import { useAccount } from 'wagmi'
 import { RegisterParams } from '@/types/donate'
 
 type Props = {
@@ -20,11 +21,13 @@ const sexOptions = [
 ]
 
 const RegisterPop: React.FC<Props> = ({ isRegister, register, loading }) => {
+  const { isConnected } = useAccount()
+
   const submit = (values: RegisterParams) => {
     register(values)
   }
   return (
-    <Popup visible={!isRegister} forceRender>
+    <Popup visible={isConnected && !isRegister} forceRender>
       <div className="pt-3 bg-white rounded-t-xl">
         <Form
           onFinish={submit}
@@ -40,9 +43,9 @@ const RegisterPop: React.FC<Props> = ({ isRegister, register, loading }) => {
           <Form.Item name="idCard" label="身份证号">
             <Input placeholder="请输入身份证号" className="border border-solid border-[#e3e3e3] p-1 rounded-md" />
           </Form.Item>
-          <Form.Item name="age" label="年龄">
+          <Form.Item name="birthYear" label="出生年份">
             <Input
-              placeholder="请输入年龄"
+              placeholder="请输入出生年份"
               type="number"
               className="border border-solid border-[#e3e3e3] p-1 rounded-md"
             />

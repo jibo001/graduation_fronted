@@ -40,7 +40,8 @@ export default function useCatchTxError(): CatchTxErrorReturn {
       try {
         err = parseError(error);
       } finally {
-        Toast.show(err.cause.reason || err.shortMessage);
+        console.error(err)
+        Toast.show(err.cause?.reason || err?.shortMessage);
       }
     }
   }, [openConnectModal, t, toastError, walletClient?.account]);
