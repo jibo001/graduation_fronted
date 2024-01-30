@@ -1,5 +1,6 @@
 import { bsc } from 'viem/chains';
 import { Toast } from 'antd-mobile';
+import { Address, zeroAddress } from 'viem';
 import { env } from '@/config/env';
 import { chains } from '@/config/wagmi';
 
@@ -80,4 +81,8 @@ export const getSex = (type: number) => {
 
 export const getAge = (birthYear: number) => {
   return new Date().getFullYear() - birthYear
+}
+
+export const isZeroAddress = (address: Address) => {
+  return address === zeroAddress
 }

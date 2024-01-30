@@ -24,7 +24,7 @@ export default function useRegister() {
 
   const person = data
 
-  const isRegister = !isLoading && !!data.idCard
+  const isRegister = !isLoading && isConnected && !!data.idCard
 
   const register = async (registerData: RegisterParams) => {
     await fetchWithCatchTxError(() =>

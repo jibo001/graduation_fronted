@@ -26,7 +26,7 @@ const BottomBar = () => {
       <div className="flex items-center justify-center">
         {tabs.map((tab) => (
           <Link to={tab.path} key={tab.name} className={`flex flex-col items-center justify-center flex-1 `}>
-            <div className={`${location.pathname === tab.path && 'text-orange-400 font-bold'} text-center`}>
+            <div className={`${location.pathname === tab.path && 'text-orange-500 font-bold'} text-center`}>
               {tab.icon}
               <div className="mt-1 text-xs">{tab.name}</div>
             </div>

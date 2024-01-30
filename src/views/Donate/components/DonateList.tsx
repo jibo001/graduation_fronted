@@ -16,9 +16,15 @@ const DonateList = () => {
         donates.map((donate) => (
           <Link to={`donateDetail?id=${donate.donate.id.toString()}`} key={donate.donate.id.toString()}>
             <DonateItem donate={donate}>
-              <Button className="text-white bg-black rounded-lg" size="mini">
-                去帮助
-              </Button>
+              {donate.donate.isFinish ? (
+                <Button className="text-white bg-orange-500 rounded-lg" size="mini">
+                  已完成
+                </Button>
+              ) : (
+                <Button className="text-white bg-black rounded-lg" size="mini">
+                  去帮助
+                </Button>
+              )}
             </DonateItem>
           </Link>
         ))

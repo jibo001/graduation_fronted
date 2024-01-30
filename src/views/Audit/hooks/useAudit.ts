@@ -16,7 +16,7 @@ export default function useAudit() {
   const audit = async (id: string, isAgree: boolean) => {
     await fetchWithCatchTxError(() => callWithGasPrice(charityContract, 'auditDonate', [BigInt(id), isAgree, reason]))
     Toast.show('审核成功')
-    navigate('/auditList')
+    navigate('/myAudit')
   }
   return {
     loading,

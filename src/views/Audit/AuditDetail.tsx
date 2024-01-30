@@ -38,7 +38,7 @@ const AuditDetail = () => {
                 <span className="text-sm">通过审核</span>
               </Button>
               <Button
-                className="text-white bg-orange-400 rounded-xl"
+                className="text-white bg-orange-500 rounded-xl"
                 block
                 loading={loading}
                 onClick={() => audit(id, false)}

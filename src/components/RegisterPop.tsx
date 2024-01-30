@@ -29,6 +29,7 @@ const RegisterPop: React.FC<Props> = ({ isRegister, register, loading }) => {
   return (
     <Popup visible={isConnected && !isRegister} forceRender>
       <div className="pt-3 bg-white rounded-t-xl">
+        <div className="mt-5 text-center text-orange-500">注册方可开启所有功能</div>
         <Form
           onFinish={submit}
           footer={

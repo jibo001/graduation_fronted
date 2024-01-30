@@ -18,14 +18,14 @@ const DonateItem: React.FC<PropsWithChildren<Props>> = ({ donate, children }) =>
           <div>{donate.donate.title}</div>
           <ProgressBar
             className="w-full"
-            percent={Number(donate.donate.currentAmount / donate.donate.targetAmount) * 100}
+            percent={(Number(donate.donate.currentAmount) / Number(donate.donate.targetAmount)) * 100}
             style={{
               '--track-width': '4px',
-              '--fill-color': '#000',
+              '--fill-color': donate.donate.isFinish ? '#f78b32' : '#000000',
             }}
           />
           <div className="text-black">
-            已筹<span className="ml-1 text-orange-400">${donate.donate.currentAmount.toString()}</span>
+            已筹<span className="ml-1 text-orange-500">${donate.donate.currentAmount.toString()}</span>
           </div>
         </div>
       </div>

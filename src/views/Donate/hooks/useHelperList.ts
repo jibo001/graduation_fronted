@@ -3,6 +3,7 @@ import { useContractReads } from "wagmi";
 import { getCharityContract } from '@/utils/contractHelpers';
 
 export default function useHelperList(id: string, donators: Address[]) {
+
   const charityContract = getCharityContract()
 
   const { data: donatorRecords, isLoading: donatorRecordsLoading } = useContractReads({
@@ -13,7 +14,7 @@ export default function useHelperList(id: string, donators: Address[]) {
         args: [donator, id]
       } as const
     ))],
-    enabled: donators.length > 0
+    enabled: !!donators && donators?.length > 0,
   })
 
   const { data: donatorsDetail, isLoading: donatorsDetailLoading } = useContractReads({
@@ -24,7 +25,7 @@ export default function useHelperList(id: string, donators: Address[]) {
         args: [donator]
       } as const
     ))],
-    enabled: donators.length > 0
+    enabled: !!donators && donators?.length > 0
   })
 
 
@@ -32,8 +33,8 @@ export default function useHelperList(id: string, donators: Address[]) {
 
   const donatorRecordsWithDetail = !loading && donators.map((donator, index) => ({
     donator,
-    amount: donatorRecords[index].result,
-    name: donatorsDetail[index].result.name
+    amount: donatorRecords?.[index].result,
+    name: donatorsDetail?.[index].result.name
   }))
 
 

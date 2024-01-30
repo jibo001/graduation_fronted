@@ -23,7 +23,7 @@ export default function useCreateDonate() {
       callWithGasPrice(charityContract, 'createDonate', [donateParams.targetAmount, json]),
     )
     Toast.show('创建成功，等待审核')
-    navigate('/')
+    navigate('/myDonate')
   }
   return {
     loading,
