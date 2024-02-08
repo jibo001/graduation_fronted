@@ -5,7 +5,8 @@ export function getAuditStatus(donate: Donate, auditorAddress: Address) {
   const auditorIndex = donate?.auditorsAddress?.findIndex(address => auditorAddress === address)
   if (!donate?.auditorReason?.[auditorIndex]) {
     return AUDIT_STATUS.NO_AUDIT
-  } if (donate.auditProgress) {
+  }
+  if (donate.auditProgress[auditorIndex]) {
     return AUDIT_STATUS.AGREE
   }
   return AUDIT_STATUS.DISAGREE

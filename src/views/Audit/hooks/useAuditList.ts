@@ -14,6 +14,7 @@ export default function useAuditList() {
     enabled: isConnected,
   })
 
+
   const auditList = data?.map((audit) => {
     return {
       person: audit.person,
@@ -21,7 +22,7 @@ export default function useAuditList() {
       auditStatus: getAuditStatus(getDonateDetail(audit.donate), address),
     }
   })
-  auditList.reverse()
+  auditList?.reverse()
   return {
     auditList,
     isLoading,

@@ -86,3 +86,11 @@ export const getAge = (birthYear: number) => {
 export const isZeroAddress = (address: Address) => {
   return address === zeroAddress
 }
+
+export const generateArray = (length: number) => {
+  const arr = []
+  for (let i = 0; i < length; i++) {
+    arr.push(i)
+  }
+  return arr
+}

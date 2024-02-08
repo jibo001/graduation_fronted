@@ -21,11 +21,10 @@ const DonateItem: React.FC<PropsWithChildren<Props>> = ({ donate, children }) =>
             percent={(Number(donate.donate.currentAmount) / Number(donate.donate.targetAmount)) * 100}
             style={{
               '--track-width': '4px',
-              '--fill-color': donate.donate.isFinish ? '#f78b32' : '#000000',
             }}
           />
           <div className="text-black">
-            已筹<span className="ml-1 text-orange-500">${donate.donate.currentAmount.toString()}</span>
+            已筹<span className="ml-1 ">${donate.donate.currentAmount.toString()}</span>
           </div>
         </div>
       </div>

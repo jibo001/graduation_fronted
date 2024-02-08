@@ -17,7 +17,7 @@ const DonateList = () => {
           <Link to={`donateDetail?id=${donate.donate.id.toString()}`} key={donate.donate.id.toString()}>
             <DonateItem donate={donate}>
               {donate.donate.isFinish ? (
-                <Button className="text-white bg-orange-500 rounded-lg" size="mini">
+                <Button className="text-white bg-green-500 rounded-lg" size="mini">
                   已完成
                 </Button>
               ) : (

@@ -24,7 +24,6 @@ export default function useDonateList(isPassed: boolean) {
     })
   ) : []
 
-
   return {
     donates,
     isLoading

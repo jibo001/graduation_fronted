@@ -28,7 +28,7 @@ const DonateDetail = () => {
   return (
     <>
       <DonateDetailHeader detail={detail} isLoading={isLoading}>
-        {!detail.donate.isFinish && (
+        {!detail.donate.isFinish && detail.donate.isPassed && (
           <>
             <Input
               value={String(amount)}

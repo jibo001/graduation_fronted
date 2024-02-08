@@ -19,6 +19,7 @@ export interface Donate {
 }
 
 export interface Person {
+  personAddress: Address;
   idCard: string;
   name: string;
   integral: bigint;
@@ -28,6 +29,7 @@ export interface Person {
   myDonateIds: readonly bigint[];
   donatedIds: readonly bigint[];
   voteIds: readonly bigint[];
+  isVoting: boolean;
 }
 
 export interface DonateWithPerson {
@@ -48,6 +50,26 @@ export type DonateParams = {
   images: string;
   sickName: string;
   targetAmount: number;
+}
+
+export interface Vote {
+  id: bigint;
+  reason: string;
+  promoter: `0x${string}`;
+  startTime: bigint;
+  target: `0x${string}`;
+  agreeNum: bigint;
+  disagreeNum: bigint;
+  isFinish: boolean;
+  voters: readonly `0x${string}`[]
+}
+
+
+export interface VoteDetail {
+  vote: Vote;
+  targetPerson: Person;
+  promoter: Person;
+  isCurrentAuditor: boolean;
 }
 
 export enum AUDIT_STATUS {

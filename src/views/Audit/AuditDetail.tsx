@@ -38,7 +38,7 @@ const AuditDetail = () => {
                 <span className="text-sm">通过审核</span>
               </Button>
               <Button
-                className="text-white bg-orange-500 rounded-xl"
+                className="text-white bg-red-500 rounded-xl"
                 block
                 loading={loading}
                 onClick={() => audit(id, false)}
@@ -55,7 +55,7 @@ const AuditDetail = () => {
         ) : (
           <div className="bg-[#f0f3f7] py-1.5 mt-5 rounded-xl text-sm">
             <div className="text-center ">原因:{getAuditReason(detail.donate, address)}</div>
-            <div className="mt-3 text-center text-orange-500">已拒绝</div>
+            <div className="mt-3 text-center text-red-500">已拒绝</div>
           </div>
         )}
       </DonateDetailHeader>

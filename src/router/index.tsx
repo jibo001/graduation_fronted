@@ -89,6 +89,14 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: '/users',
+        element: lazyLoadRoutes(() => import('@/views/Users/Users')),
+        // router meta
+        handle: {
+          name: 'users',
+        },
+      },
+      {
         path: '/profile',
         element: lazyLoadRoutes(() => import('@/views/Profile/Profile')),
         // router meta
