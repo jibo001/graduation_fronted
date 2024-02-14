@@ -9,7 +9,8 @@ export default function usePersonDetail(address: Address) {
     ...charityContract,
     functionName: 'getPersonDetail',
     args: [address],
-    enabled: !!address && !isZeroAddress(address)
+    enabled: !!address && !isZeroAddress(address),
+    watch: true
   })
   return {
     personDetail,

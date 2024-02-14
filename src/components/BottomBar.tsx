@@ -27,7 +27,7 @@ const BottomBar = () => {
   ]
 
   return (
-    <div className="absolute bottom-0 w-full py-3 bg-white rounded-t-xl bottom-tab">
+    <div className="fixed bottom-0 w-full py-3 bg-white rounded-t-xl bottom-tab">
       <div className="flex items-center justify-center">
         {tabs.map((tab) => (
           <Link to={tab.path} key={tab.name} className={`flex flex-col items-center justify-center flex-1 `}>

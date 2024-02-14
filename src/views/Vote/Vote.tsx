@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
 import { Button, SpinLoading } from 'antd-mobile'
+import { useCountDown } from 'ahooks'
 import { VoteDetail } from '@/types/donate'
 import useVoteList from './hooks/useVoteList'
 
 const Vote = () => {
-  const { voteList, isLoading } = useVoteList()
+  const { votes, isLoading } = useVoteList()
   return (
     <>
       <div>
@@ -20,7 +21,7 @@ const Vote = () => {
             />
           </div>
         ) : (
-          voteList.map((vote) => <VoteItem key={vote.vote.id.toString()} vote={vote} />)
+          votes?.map(({ result: vote }) => <VoteItem key={vote.vote.id.toString()} vote={vote} />)
         )}
       </div>
     </>
@@ -28,10 +29,14 @@ const Vote = () => {
 }
 
 const VoteItem: React.FC<{ vote: VoteDetail }> = ({ vote }) => {
+  const [countdown, formattedRes] = useCountDown({
+    leftTime: Number(vote?.vote.endTime) * 1000 - Date.now(),
+  })
+  const { days, hours, minutes, seconds } = formattedRes
   return (
     <div className="p-3 mt-4 text-sm bg-white rounded-xl">
       <div className="text-center">
-        {vote.isCurrentAuditor ? (
+        {vote.vote.isCurrentAuditor ? (
           <span className="text-red-500">废除审核员</span>
         ) : (
           <span className="text-green-500">成为审核员</span>
@@ -50,10 +55,30 @@ const VoteItem: React.FC<{ vote: VoteDetail }> = ({ vote }) => {
           反对票数：<span className="text-red-500">{vote.vote.disagreeNum.toString()}</span>
         </div>
       </div>
-      <div className="mt-3">
-        <Link to={`/voteDetail?id=${vote.vote.id.toString()}&isCurrentAuditor=${vote.isCurrentAuditor}`}>
+      <div className="flex items-center justify-between mt-3">
+        {countdown ? (
+          <div>
+            {' '}
+            距离投票结束：{days}天{hours}时{minutes}分{seconds}秒
+          </div>
+        ) : (
+          <div>
+            {vote.vote.isFinish ? (
+              <div>
+                {vote.vote.agreeNum > vote.vote.disagreeNum ? (
+                  <span className="text-green-500">投票结果：投票成功</span>
+                ) : (
+                  <span className="text-red-500">投票结果：投票失败</span>
+                )}
+              </div>
+            ) : (
+              '待确认投票结果'
+            )}
+          </div>
+        )}
+        <Link to={`/voteDetail?id=${vote.vote.id.toString()}&isCurrentAuditor=${vote.vote.isCurrentAuditor}`}>
           <Button className="text-white bg-black rounded-lg" size="small" block>
-            <span className="text-sm">参与投票</span>
+            <span className="text-sm">查看详情</span>
           </Button>
         </Link>
       </div>

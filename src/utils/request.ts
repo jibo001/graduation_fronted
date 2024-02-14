@@ -41,7 +41,7 @@ const request = <T>(
     })
       .then((res) => {
         Toast.clear();
-        if (res.data.code === 1) {
+        if (res.data.code === 200) {
           // eslint-disable-next-line no-param-reassign
           res.data.success = true;
           resolve(res.data);
@@ -56,7 +56,7 @@ const request = <T>(
         }
       }).catch((error) => {
         reject(new Error(error?.response?.data?.msg || 'Network exception'))
-        // Toast.clear();
+        Toast.show(error?.response?.data?.msg || 'Network exception');
         // resolve({
         //   code: 500,
         //   success: false,

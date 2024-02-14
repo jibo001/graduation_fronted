@@ -2,7 +2,7 @@ import request from "@/utils/request"
 
 
 
-export const queryUserInfo = async () => {
-  const resp = await request<{ level: number, isActivate: number }>('GET', '/users/getUserInfo', null)
+export const queryIdCard = async (params: { idCard: string }) => {
+  const resp = await request<{ isValid: boolean }>('POST', '/validateIdCard', params)
   return resp.data
 }

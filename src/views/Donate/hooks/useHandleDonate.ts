@@ -15,7 +15,7 @@ export default function useHandleDonate() {
 
 
   const donate = async (id: bigint) => {
-    const res = await fetchWithCatchTxError(() =>
+    await fetchWithCatchTxError(() =>
       callWithGasPrice(charityContract, 'donateHandler', [id, amount]),
     )
     Toast.show("捐赠成功")

@@ -56,12 +56,13 @@ export interface Vote {
   id: bigint;
   reason: string;
   promoter: `0x${string}`;
-  startTime: bigint;
+  endTime: bigint;
   target: `0x${string}`;
   agreeNum: bigint;
   disagreeNum: bigint;
   isFinish: boolean;
-  voters: readonly `0x${string}`[]
+  voters: readonly `0x${string}`[];
+  isCurrentAuditor: boolean;
 }
 
 
@@ -69,7 +70,6 @@ export interface VoteDetail {
   vote: Vote;
   targetPerson: Person;
   promoter: Person;
-  isCurrentAuditor: boolean;
 }
 
 export enum AUDIT_STATUS {

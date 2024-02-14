@@ -1,6 +1,6 @@
 export default {
   charity: {
-    97: '0x9cE8d4c69fB09F15c1649F3D77D05992D9F8C9F4',
+    97: '0x2dc49B54EE454aF6b68CD0c4c71Fb6f3A09889b5',
     56: '0xF5c07c80816C38DDca01494867B40c995D21b7e9',
   },
   usdt: {

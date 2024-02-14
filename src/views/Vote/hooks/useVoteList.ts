@@ -9,28 +9,19 @@ export default function useVoteList() {
     functionName: 'voteCurrentId',
   }))
 
-  const { data: auditorAddress, isSuccess } = useContractRead({
-    ...charityContract,
-    functionName: 'getAuditorAddress'
-  })
-
   const { data: votes, isLoading } = useContractReads({
     contracts: [...generateArray(Number(data || 0)).map(id => ({
       ...charityContract,
       functionName: 'getVoteDetail',
       args: [BigInt(id || 0)],
     } as const))],
-    enabled: data > 0 && isSuccess
+    enabled: data > 0
   })
 
-  const voteList = votes?.map(({ result }) => ({
-    ...result,
-    isCurrentAuditor: auditorAddress.findIndex(address => address === result.targetPerson.personAddress) !== -1
-  }))
+  votes?.reverse()
 
   return {
     votes,
-    isLoading,
-    voteList
+    isLoading
   }
 }

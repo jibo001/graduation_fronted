@@ -1,6 +1,6 @@
 import {
   HandPayCircleOutline,
-  FingerdownOutline,
+  // FingerdownOutline,
   LinkOutline,
   CheckCircleOutline,
   AppstoreOutline,
@@ -30,11 +30,11 @@ const Profile = () => {
       icon: <CheckCircleOutline />,
       path: '/myAudit',
     },
-    {
-      name: '我的投票',
-      icon: <FingerdownOutline />,
-      path: '/myVote',
-    },
+    // {
+    //   name: '我的投票',
+    //   icon: <FingerdownOutline />,
+    //   path: '/myVote',
+    // },
   ]
   return (
     <>
@@ -45,11 +45,12 @@ const Profile = () => {
       </div>
       <div className="px-5">
         <div className="text-sm font-bold text-center">{!isConnected ? '请连接钱包' : person?.name || '未注册'}</div>
-        <div className="mt-4 px-2 py-2.5 text-sm font-bold text-center bg-white rounded-full mx-14">
-          欢迎加入HopeChain
+        <div className="mt-4 px-4 py-2.5  font-bold text-center bg-white rounded-full justify-between  flex text-xs whitespace-nowrap">
+          <div>当前累计捐款：{person?.cumulativeAmount.toString() || 0}</div>
+          <div>当前剩余积分：{person?.integral.toString() || 0}</div>
         </div>
       </div>
-      <div className="mt-8">
+      <div className="mt-6">
         {menuList.map((menu) => (
           <Link to={menu.path} key={menu.path}>
             <div className="flex items-center px-8 py-4 mb-4 bg-white rounded-full">

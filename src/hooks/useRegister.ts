@@ -6,6 +6,7 @@ import { getCharityContract } from "@/utils/contractHelpers"
 import useCallWithGasPrice from "./useCallWithGasPrice"
 import useCatchTxError from "./useCatchTxError"
 import { RegisterParams } from "@/types/donate";
+import { queryIdCard } from "@/services/user";
 
 export default function useRegister() {
   const navigate = useNavigate()
@@ -27,6 +28,10 @@ export default function useRegister() {
   const isRegister = !isLoading && isConnected && !!data.idCard
 
   const register = async (registerData: RegisterParams) => {
+    await queryIdCard({
+      idCard: registerData.idCard
+    })
+
     await fetchWithCatchTxError(() =>
       callWithGasPrice(charityContract, 'register', [hashMessage(registerData.idCard), registerData.name, registerData.birthYear, registerData.sex]),
     )
