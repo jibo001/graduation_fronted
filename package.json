@@ -23,6 +23,7 @@
     }
   },
   "dependencies": {
+    "@jiaminghi/data-view-react": "^1.2.5",
     "@rainbow-me/rainbowkit": "^1.0.4",
     "@tanstack/react-query": "^4.29.19",
     "@tanstack/react-query-devtools": "^4.32.0",

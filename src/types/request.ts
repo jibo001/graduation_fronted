@@ -1,7 +1,7 @@
 export interface ApiResponse<T> {
   code: string | number;
   data: T;
-  msg: string,
+  message: string,
   success: boolean;
   total?: number
 }

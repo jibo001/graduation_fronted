@@ -6,7 +6,7 @@ import { getCharityContract } from "@/utils/contractHelpers"
 import useCallWithGasPrice from "./useCallWithGasPrice"
 import useCatchTxError from "./useCatchTxError"
 import { RegisterParams } from "@/types/donate";
-import { queryIdCard } from "@/services/user";
+import { _register, queryIdCard } from "@/services/user";
 
 export default function useRegister() {
   const navigate = useNavigate()
@@ -31,10 +31,16 @@ export default function useRegister() {
     await queryIdCard({
       idCard: registerData.idCard
     })
-
     await fetchWithCatchTxError(() =>
       callWithGasPrice(charityContract, 'register', [hashMessage(registerData.idCard), registerData.name, registerData.birthYear, registerData.sex]),
     )
+    await _register({
+      idCard:registerData.idCard,
+      userName:registerData.name,
+      personAddress:address,
+      birthYear:registerData.birthYear,
+      sex:registerData.sex
+    })
     refetch()
     Toast.show('注册成功')
     navigate('/')

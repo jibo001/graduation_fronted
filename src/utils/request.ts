@@ -20,15 +20,6 @@ const request = <T>(
   headers.address = toLower(sign?.address || '');
   headers.message = sign?.message || '';
   headers.signature = sign?.signature || '';
-  if (needToken) {
-    // if (!headers.signature) {
-    //   return new Promise((_resolve, reject) => {
-    //     reject(new Error('Please login first'))
-    //   });
-    // }
-    // headers.authorized = localStorage.getItem('authorized') || '';
-  }
-
   return new Promise((resolve, reject) => {
     axios({
       method,
@@ -41,28 +32,16 @@ const request = <T>(
     })
       .then((res) => {
         Toast.clear();
-        if (res.data.code === 200) {
+        if (res.data.code === 200 || res.data.code === '200') {
           // eslint-disable-next-line no-param-reassign
           res.data.success = true;
           resolve(res.data);
         } else {
-          // resolve({
-          //   code: res.data.code,
-          //   success: false,
-          //   data: null,
-          //   msg: res.data.msg || 'Network exception',
-          // });
-          throw new Error(res.data.msg || 'Network exception')
+          throw new Error(res.data.message || 'Network exception')
         }
       }).catch((error) => {
-        reject(new Error(error?.response?.data?.msg || 'Network exception'))
-        Toast.show(error?.response?.data?.msg || 'Network exception');
-        // resolve({
-        //   code: 500,
-        //   success: false,
-        //   data: null,
-        //   msg: error?.response?.data?.msg || 'Network exception',
-        // });
+        reject(new Error(error?.message || 'Network exception'))
+        Toast.show(error?.message || 'Network exception');
       });
   });
 };

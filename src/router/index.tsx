@@ -105,6 +105,14 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: '/dataPanel',
+        element: lazyLoadRoutes(() => import('@/views/DataPanel/DataPanel')),
+        // router meta
+        handle: {
+          name: 'dataPanel',
+        },
+      },
+      {
         path: '*',
         element: <div>Not Found</div>,
       },
