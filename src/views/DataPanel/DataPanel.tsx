@@ -1,27 +1,24 @@
 import { FullScreenContainer, ScrollBoard, Decoration11, Charts, BorderBox8 } from '@jiaminghi/data-view-react'
+import { useEffect, useState } from 'react'
+import { _dataPanel } from '@/services/donate'
+import { formatAddress } from '@/utils'
 
 const DataPanel = () => {
+  const [helpPersonNum, setHelpPersonNum] = useState(0)
+  const [totalAmount, setTotalAmount] = useState(0)
+  const [donateRecords, setDonateRecords] = useState([])
+  const [recentSevenDaysAmount, setRecentSevenDaysAmount] = useState([])
+  const [recentSevenDaysPersonData, setRecentSevenDaysPersonData] = useState([])
   const config = {
-    header: ['列1', '列2', '列3'],
+    header: ['捐赠地址', '受捐地址', '捐款金额', '资金流向'],
     headerBGC: '#233f6b',
-    data: [
-      ['<span style="color:#37a2da;">行1列1</span>', '行1列2', '行1列3'],
-      ['行2列1', '<span style="color:#32c5e9;">行2列2</span>', '行2列3'],
-      ['行3列1', '行3列2', '<span style="color:#67e0e3;">行3列3</span>'],
-      ['行4列1', '<span style="color:#9fe6b8;">行4列2</span>', '行4列3'],
-      ['<span style="color:#ffdb5c;">行5列1</span>', '行5列2', '行5列3'],
-      ['行6列1', '<span style="color:#ff9f7f;">行6列2</span>', '行6列3'],
-      ['行7列1', '行7列2', '<span style="color:#fb7293;">行7列3</span>'],
-      ['行8列1', '<span style="color:#e062ae;">行8列2</span>', '行8列3'],
-      ['<span style="color:#e690d1;">行9列1</span>', '行9列2', '行9列3'],
-      ['行10列1', '<span style="color:#e7bcf3;">行10列2</span>', '行10列3'],
-    ],
-    align: ['center', 'center', 'center'],
+    data: donateRecords,
+    align: ['center', 'center', 'center', 'center'],
   }
 
   const lineOption = {
     title: {
-      text: '月捐款数据',
+      text: '近七日捐款数据',
       style: {
         fill: '#fff',
         fontSize: 16,
@@ -30,7 +27,7 @@ const DataPanel = () => {
       },
     },
     xAxis: {
-      data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+      data: recentSevenDaysAmount.map((item) => item.date),
       axisLabel: {
         color: '#fff',
         style: {
@@ -55,7 +52,7 @@ const DataPanel = () => {
     },
     series: [
       {
-        data: [1200, 2230, 1900, 2100, 3500, 4200, 3985],
+        data: recentSevenDaysAmount.map((item) => item.totalAmount),
         type: 'line',
         lineArea: {
           show: true,
@@ -67,7 +64,7 @@ const DataPanel = () => {
 
   const barChart = {
     title: {
-      text: '周销售额趋势',
+      text: '近七天注册人数',
       style: {
         fill: '#fff',
         fontSize: 16,
@@ -76,7 +73,7 @@ const DataPanel = () => {
       },
     },
     xAxis: {
-      data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+      data: recentSevenDaysPersonData.map((item) => item.date),
       axisLabel: {
         fill: '#fff',
         style: {
@@ -101,7 +98,7 @@ const DataPanel = () => {
     },
     series: [
       {
-        data: [2339, 1899, 2118, 1790, 3265, 4465, 3996],
+        data: recentSevenDaysPersonData.map((item) => item.registrationCount),
         type: 'bar',
         gradient: {
           color: ['rgba(55, 162, 218, 0.6)', 'rgba(55, 162, 218, 0)'],
@@ -113,6 +110,25 @@ const DataPanel = () => {
       },
     ],
   }
+
+  useEffect(() => {
+    async function getData() {
+      const resp = await _dataPanel()
+      setHelpPersonNum(resp.helpPersonNum)
+      setTotalAmount(resp.totalAmount)
+      setDonateRecords(
+        resp.donateRecords.map((item: any) => [
+          formatAddress(item.address),
+          formatAddress(item.toAddress),
+          item.amount,
+          `<a href="https://testnet.bscscan.com/tx/${item.hash}" target="_blank">${formatAddress(item.hash)}</a>`,
+        ]),
+      )
+      setRecentSevenDaysAmount(resp.recentSevenDaysAmount)
+      setRecentSevenDaysPersonData(resp.recentSevenDaysPersonData)
+    }
+    getData()
+  }, [])
 
   return (
     <FullScreenContainer className="bg-[#020a29]">
@@ -128,17 +144,23 @@ const DataPanel = () => {
               <div>
                 <div className="text-3xl text-center text-white">总筹集金额</div>
                 <div className="flex justify-center mt-5 gap-x-5">
-                  {'123456'.split('').map((item, index) => (
-                    <Card key={index} num={item} />
-                  ))}
+                  {totalAmount
+                    .toString()
+                    .split('')
+                    .map((item, index) => (
+                      <Card key={index} num={item} />
+                    ))}
                 </div>
               </div>
               <div>
                 <div className="text-3xl text-center text-white">累计帮助人数</div>
                 <div className="flex justify-center mt-5 gap-x-5">
-                  {'123456'.split('').map((item, index) => (
-                    <Card key={index} num={item} />
-                  ))}
+                  {helpPersonNum
+                    .toString()
+                    .split('')
+                    .map((item, index) => (
+                      <Card key={index} num={item} />
+                    ))}
                 </div>
               </div>
             </div>

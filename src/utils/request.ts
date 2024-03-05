@@ -10,7 +10,7 @@ const request = <T>(
   method: string,
   url: string,
   params: any | null,
-  needToken: boolean = true,
+  // needToken: boolean = true,
   headerContentType: string = 'application/json',
   baseURL: string = env.baseUrl,
 ): Promise<ApiResponse<T>> => {

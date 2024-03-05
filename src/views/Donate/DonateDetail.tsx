@@ -19,7 +19,7 @@ const DonateDetail = () => {
 
   const onDonate = () => {
     if (usdtIsApprove) {
-      donate(BigInt(id))
+      donate(BigInt(id), detail.donate.personAddress)
     } else {
       handleUsdtApprove()
     }

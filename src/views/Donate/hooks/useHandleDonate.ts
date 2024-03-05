@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Toast } from "antd-mobile";
+import { Address, useAccount } from "wagmi";
 import useCallWithGasPrice from "@/hooks/useCallWithGasPrice";
 import useCatchTxError from "@/hooks/useCatchTxError";
 import { getCharityContract } from "@/utils/contractHelpers";
+import { _donateHandler } from "@/services/donate";
 
 export default function useHandleDonate() {
-
+  const { address } = useAccount()
   const [amount, setAmount] = useState<number>()
   const charityContract = getCharityContract()
 
@@ -14,12 +16,23 @@ export default function useHandleDonate() {
 
 
 
-  const donate = async (id: bigint) => {
-    await fetchWithCatchTxError(() =>
+  const donate = async (id: bigint, toAddress: Address) => {
+    const resp = await fetchWithCatchTxError(() =>
       callWithGasPrice(charityContract, 'donateHandler', [id, amount]),
     )
-    Toast.show("捐赠成功")
-    setAmount(undefined)
+    if (resp.status === 'success') {
+      _donateHandler({
+        donateId: Number(id),
+        amount,
+        address,
+        toAddress,
+        hash: resp.transactionHash
+      })
+
+      Toast.show("捐赠成功")
+      setAmount(undefined)
+    }
+
   }
   return {
     loading,

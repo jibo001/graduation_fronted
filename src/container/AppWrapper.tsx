@@ -14,19 +14,17 @@ export const AppWrapper: React.FC<React.PropsWithChildren> = () => {
 
   const location = useLocation()
 
-
   const { isRegister, register, loading } = useRegister()
 
   const DATA_PANEL_PATH = '/dataPanel'
 
   const isDataPanel = location.pathname === DATA_PANEL_PATH
 
-
   return (
     <>
       <ToastContainer />
       {!isDataPanel && <Header />}
-      <RegisterPop isRegister={isRegister} register={register} loading={loading} />
+      {!isDataPanel && <RegisterPop isRegister={isRegister} register={register} loading={loading} />}
       <Suspense fallback={<SuspenseLoading />}>
         <div className="px-3.5 py-5 pt-[65px]">
           <Outlet />
