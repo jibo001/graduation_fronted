@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom'
 import { Button, SpinLoading } from 'antd-mobile'
 import { useCountDown } from 'ahooks'
+// import { reverse } from 'lodash'
 import { VoteDetail } from '@/types/donate'
 import useVoteList from './hooks/useVoteList'
 
 const Vote = () => {
   const { votes, isLoading } = useVoteList()
+  // const _votes = reverse(votes)
   return (
     <>
       <div>

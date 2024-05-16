@@ -1,9 +1,9 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-@import "./reset.css";
-@import "./variables.css";
+@import './reset.css';
+@import './variables.css';
 
 body {
   /* font-variant-east-asian: traditional; */
@@ -20,26 +20,18 @@ body {
   color: transparent;
 }
 
-#root {
-  margin: 0 auto;
-  /* max-width: 700px; */
-  /* min-height: 100vh; */
-  background: #eff3f7;
-  background-repeat:no-repeat;
-  padding-bottom: 70px;
-}
-
 :root:root {
-  --adm-color-primary:#000000;
+  --adm-color-primary: #000000;
 }
 
-.adm-list-item-content{
-  border:none !important;
+.adm-list-item-content {
+  border: none !important;
 }
-.adm-input-element, .adm-text-area-element{
+.adm-input-element,
+.adm-text-area-element {
   font-size: 14px !important;
 }
 .adm-form {
-  --border-bottom:'none';
-  --border-top:'none';
+  --border-bottom: 'none';
+  --border-top: 'none';
 }

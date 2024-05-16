@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Toast } from 'antd-mobile'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 // Create a client
 
 const ReactQueryWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
@@ -19,7 +19,7 @@ const ReactQueryWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools />
+      {/* <ReactQueryDevtools /> */}
       {children}
     </QueryClientProvider>
   )

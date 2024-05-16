@@ -1,10 +1,12 @@
 export default {
   charity: {
+    31337: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',
     97: '0xA2819F594D92093963EE95EC32038aaaEBE1aF04',
     56: '0xF5c07c80816C38DDca01494867B40c995D21b7e9',
   },
   usdt: {
+    31337: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
     97: '0xe3e2B1dCc61b6A3F885cAcd5ED7d7D3d61fDf4A1',
     56: '0x55d398326f99059fF775485246999027B3197955',
   },
-} as const satisfies Record<string, Record<number, `0x${string}`>>;
+} as const satisfies Record<string, Record<number, `0x${string}`>>

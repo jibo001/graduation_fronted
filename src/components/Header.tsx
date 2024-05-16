@@ -6,7 +6,7 @@ import CustomConnectButton from './CustomConnectButton'
 const Header = () => {
   const { isConnected } = useAccount()
   return (
-    <div className="fixed z-50 flex items-center justify-between w-full px-3 py-2 bg-white">
+    <div className="fixed z-50 flex items-center justify-between w-full px-3 py-2 bg-white max-w-[500px]">
       <div className="flex items-center">
         <img src="/images/logo.svg" className="w-10" alt="" />
         <div>HopeChain</div>

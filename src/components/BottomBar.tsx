@@ -14,6 +14,11 @@ const BottomBar = () => {
       path: '/vote',
       icon: <FlagOutline />,
     },
+    // {
+    //   name: '聊天室',
+    //   path: '/chat',
+    //   icon: <MessageOutline />,
+    // },
     {
       name: '审核人员公示',
       path: '/users',
@@ -27,7 +32,7 @@ const BottomBar = () => {
   ]
 
   return (
-    <div className="fixed bottom-0 w-full py-3 bg-white rounded-t-xl bottom-tab">
+    <div className="absolute bottom-0 w-full py-3 bg-white rounded-t-xl bottom-tab max-w-[500px] ">
       <div className="flex items-center justify-center">
         {tabs.map((tab) => (
           <Link to={tab.path} key={tab.name} className={`flex flex-col items-center justify-center flex-1 `}>

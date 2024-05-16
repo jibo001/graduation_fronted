@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import { fileURLToPath } from "url";
+import viteCompression from 'vite-plugin-compression'
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), viteCompression()],
   resolve: {
     // 路径别名
     alias: {
@@ -24,5 +25,5 @@ export default defineConfig({
         secure: false
       }
     }
-  },
+  }
 })

@@ -32,7 +32,7 @@ const Web3Handler: React.FC<React.PropsWithChildren> = ({ children }) => {
 const Web3Wrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains} initialChain={env.chainId} theme={darkTheme()}>
+      <RainbowKitProvider chains={chains} initialChain={env.chainId}>
         <Web3Handler>{children}</Web3Handler>
       </RainbowKitProvider>
     </WagmiConfig>

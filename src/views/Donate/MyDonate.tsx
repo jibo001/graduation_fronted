@@ -23,7 +23,7 @@ const MyDonate = () => {
               <div className="flex items-center text-xs gap-x-2">
                 <div>
                   {donate.donate.auditorReason.some((reason) => !reason) ? (
-                    <span className="text-blue-500">審核中</span>
+                    <span className="text-blue-500">审核中</span>
                   ) : donate.donate.auditProgress.every((progress) => progress) ? (
                     <span className="text-green-500">审核通过</span>
                   ) : (
@@ -32,6 +32,9 @@ const MyDonate = () => {
                 </div>
                 <Button className="text-white bg-black rounded-lg" size="mini">
                   查看詳情
+                </Button>
+                <Button className="text-white bg-black rounded-lg" size="mini">
+                  捐赠回访
                 </Button>
               </div>
             </DonateItem>

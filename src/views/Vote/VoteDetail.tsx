@@ -26,7 +26,6 @@ const VoteDetail = () => {
       <div className="p-3 text-sm bg-white rounded-xl">
         {!isLoading && (
           <>
-            {}
             <div className="text-center">
               {isCurrentAuditor === 'true' ? (
                 <span className="text-red-500">废除审核员</span>

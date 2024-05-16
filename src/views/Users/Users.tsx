@@ -21,9 +21,12 @@ const UserItem: React.FC<{ user: Person; isAuditor: boolean }> = ({ user, isAudi
   return (
     <>
       <div className="p-3 mt-3 text-sm bg-white rounded-xl">
-        <div>姓名：{user.name}</div>
+        <div>
+          姓名：
+          {user.name}
+        </div>
         <div className="flex items-center justify-between mt-2">
-          <span>捐赠求助次数：{user.donatedIds.length}</span>
+          <span>捐赠次数：{user.donatedIds.length}</span>
           {isAuditor ? (
             <Button
               size="small"
@@ -52,18 +55,18 @@ const UserItem: React.FC<{ user: Person; isAuditor: boolean }> = ({ user, isAudi
           if (!loading) setVisible(false)
         }}
       >
-        <div className="p-5">
+        <div className="p-5 xl:w-[450px] xl:h-[200px]">
           <TextArea
             onChange={(value) => setReason(value)}
             value={reason}
-            className="border border-solid border-[#e3e3e3] p-1 rounded-md"
+            className="border border-solid border-[#e3e3e3] p-1 xl:h-[120px] rounded-md"
             placeholder="请输入投票原因"
           />
           <Button
             onClick={() => startVote(user.personAddress)}
             block
             type="submit"
-            size="small"
+            size="middle"
             className="mt-3 text-white bg-black rounded-lg"
             loading={loading}
           >

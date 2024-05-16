@@ -8,6 +8,11 @@ import { DonateParams } from '@/types/donate'
 const CreateDonate = () => {
   const [fileList, setFileList] = useState<ImageUploadItem[]>([])
   const { crateDonate, loading } = useCreateDonate()
+
+  const submit = async (values: DonateParams) => {
+    const images = fileList.map((item) => item.url).join(',')
+    await crateDonate({ ...values, images })
+  }
   const upload = async (file: File) => {
     const formData = new FormData()
     formData.append('file', file)
@@ -34,10 +39,7 @@ const CreateDonate = () => {
       throw new Error(error)
     }
   }
-  const submit = async (values: DonateParams) => {
-    const images = fileList.map((item) => item.url).join(',')
-    await crateDonate({ ...values, images })
-  }
+
   return (
     <div className="bg-white min-h-[75vh] rounded-xl">
       <Form
@@ -61,7 +63,7 @@ const CreateDonate = () => {
             autoSize={{ minRows: 3, maxRows: 5 }}
           />
         </Form.Item>
-        <Form.Item name="targetAmount" label="筹款金额($)" rules={[{ required: true, message: '筹款金额不能为空' }]}>
+        <Form.Item name="targetAmount" label="筹款金额" rules={[{ required: true, message: '筹款金额不能为空' }]}>
           <Input
             placeholder="请输入筹款金额"
             type="number"

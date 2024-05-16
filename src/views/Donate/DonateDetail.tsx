@@ -86,11 +86,11 @@ const AmountGroup: React.FC<Pick<Donate, 'currentAmount' | 'targetAmount'>> = ({
     <div className="flex items-center justify-between mt-8">
       <div className="flex-1 text-center">
         <div className="text-2xl text-orange-500">{targetAmount.toString()}</div>
-        <div className="text-xs mt-1.5 text-[#898989]">急需筹款($)</div>
+        <div className="text-xs mt-1.5 text-[#898989]">急需筹款</div>
       </div>
       <div className="flex-1 text-center">
         <div className="text-2xl text-orange-500">{currentAmount.toString()}</div>
-        <div className="text-xs mt-1.5 text-[#898989]">已经筹到($)</div>
+        <div className="text-xs mt-1.5 text-[#898989]">已经筹到</div>
       </div>
     </div>
   )
@@ -134,7 +134,7 @@ const ProofMaterial: React.FC<{ detail: DonateWithPerson }> = ({ detail }) => {
         <InfoWrapper title="收款地址">
           <a
             target="_blank"
-            href={`${client.chain.blockExplorers.default.url}/address/${detail.donate.personAddress}`}
+            href={`${client.chain.blockExplorers?.default.url}/address/${detail.donate.personAddress}`}
             rel="noreferrer"
           >
             <span className="text-blue-500">{formatAddress(detail.donate.personAddress)}</span>
@@ -185,7 +185,7 @@ const AuditorReason: React.FC<{ donate: Donate }> = ({ donate }) => {
   return (
     <div className="p-3 mt-4 bg-white rounded-xl">
       <div className="text-lg">审核人员意见</div>
-      <div className="mt-3 bg-[#f1f1f171] px-4 py-6 rounded-xl">
+      <div className="mt-3 bg-[#f1f1f171] px-4 py-6 rounded-xl flex flex-col gap-y-2.5">
         {!isLoading &&
           personsDetail?.map(({ result: person }, index) => (
             <div className="flex items-center justify-between text-sm" key={person.personAddress}>

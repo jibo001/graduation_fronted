@@ -65,11 +65,27 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: '/donateVisit',
+        element: lazyLoadRoutes(() => import('@/views/Donate/DonateVisit')),
+        // router meta
+        handle: {
+          name: 'donateVisit',
+        },
+      },
+      {
         path: '/vote',
         element: lazyLoadRoutes(() => import('@/views/Vote/Vote')),
         // router meta
         handle: {
           name: 'vote',
+        },
+      },
+      {
+        path: '/chat',
+        element: lazyLoadRoutes(() => import('@/views/Chat/Chat')),
+        // router meta
+        handle: {
+          name: 'chat',
         },
       },
       {
